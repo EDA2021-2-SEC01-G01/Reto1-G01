@@ -49,7 +49,7 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-
+        catalog = controller.loadCatalog('Artists-utf8-small.csv', 'Artworks-utf8-small.csv')
     elif int(inputs[0]) == 2:
         pass
 

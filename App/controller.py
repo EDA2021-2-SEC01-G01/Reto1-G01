@@ -30,6 +30,11 @@ El controlador se encarga de mediar entre la vista y el modelo.
 """
 
 # Inicialización del Catálogo de libros
+def loadCatalog(artistFilename, artworksFilename):
+  artistFile = cf.data_dir + artistFilename
+  artworksFile = cf.data_dir + artworksFilename
+
+  return model.createCatalog(artistFile, artworksFile)
 
 # Funciones para la carga de datos
 
