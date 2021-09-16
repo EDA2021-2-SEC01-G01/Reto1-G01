@@ -36,10 +36,19 @@ los mismos.
 """
 
 # Construccion de modelos
+def newCatalog():
+    catalog = {"autores":None,
+               "obras":None}
 
 # Funciones para agregar informacion al catalogo
+def addAuthor(catalog,author):
+    lt.addLast(catalog["autores"],author)
 
+def addPaint(catalog,paint):
+    lt.addLast(catalog["obras"],paint)
+    
 # Funciones para creacion de datos
+
 
 # Funciones de consulta
 
