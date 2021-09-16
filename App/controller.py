@@ -35,12 +35,7 @@ def initCatalog():
     
     return catalog
 
-catalog = None
-
 # Funciones para la carga de datos
-def loadData(catalog):
-    loadAuthors(catalog)
-    loadPaints(catalog)
 
 def loadAuthors(catalog):
     authorsFile = cf.data_dir + "Artists-utf8-small.csv"
@@ -54,6 +49,9 @@ def loadPaints(catalog):
     for paint in input_file:
         model.addPaint(catalog,paint)
 
+def loadData(catalog):
+    loadAuthors(catalog)
+    loadPaints(catalog)
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo

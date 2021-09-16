@@ -40,6 +40,11 @@ def newCatalog():
     catalog = {"autores":None,
                "obras":None}
 
+    catalog["autores"] = lt.newList(datastructure="ARRAY_LIST")
+    catalog["obras"] = lt.newList(datastructure="ARRAY_LIST")
+
+    return catalog
+    
 # Funciones para agregar informacion al catalogo
 def addAuthor(catalog,author):
     lt.addLast(catalog["autores"],author)
