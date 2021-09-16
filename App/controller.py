@@ -41,3 +41,5 @@ def loadCatalog(artistFilename, artworksFilename):
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+
+#loadAuthors(initCatalog)

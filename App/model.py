@@ -36,21 +36,27 @@ los mismos.
 """
 
 # Construccion de modelos
-
 def createCatalog(artistsFile, artworksFile):
   """
   Carga la informacion proveniente del archivo csv.
   """
   catalog = {
     'artists': lt.newList(datastructure='ARRAY_LIST', filename=artistsFile),
-    'artworks': lt.newList(datastructure='ARRAY_LIST', filename=artistsFile),
+    'artworks': lt.newList(datastructure='ARRAY_LIST', filename=artworksFile),
   }
+  
   return catalog
 
 
 # Funciones para agregar informacion al catalogo
+def addArtist(catalog, artist):
+    lt.addLast(catalog["artists"], artist)
 
+def addArtwork(catalog, artwork):
+    lt.addLast(catalog["artworks"], artwork)
+    
 # Funciones para creacion de datos
+
 
 # Funciones de consulta
 
