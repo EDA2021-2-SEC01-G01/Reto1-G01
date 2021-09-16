@@ -33,6 +33,22 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Funciones para la carga de datos
 
+def loadAuthors(catalog):
+    authorsFile = cf.data_dir + "Artists-utf8-small.csv"
+    input_file = csv.DictReader(open(authorsFile, encoding="utf-8"))
+    for author in input_file:
+        model.addAuthor(catalog["autores"],author)
+
+def loadPaints(catalog):
+    paintsFile = cf.data_dir + "Artworks-utf8-small.csv"
+    input_file = csv.DictReader(open(paintsFile, encoding="utf-8"))
+    for paint in input_file:
+        model.addPaint(catalog,paint)
+
+def loadData(catalog):
+    loadAuthors(catalog)
+    loadPaints(catalog)
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+#loadAuthors(initCatalog)
