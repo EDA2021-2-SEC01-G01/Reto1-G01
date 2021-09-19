@@ -36,15 +36,33 @@ los mismos.
 """
 
 # Construccion de modelos
-def newCatalog():
-    catalog = {"autores":None,
-               "obras":None}
+
+def initCatalog():
+  """
+  Carga la informacion proveniente del archivo csv.
+  """
+  catalog = {
+    'artists': None,
+    'artworks': None,
+  }
+  
+  return catalog
+
 
 # Funciones para agregar informacion al catalogo
-def addAuthor(catalog, author):
-    lt.addLast(catalog["artists"],author)
 
-def addPaint(catalog, artwork):
+def loadArtists(catalog, filename):
+    catalog['artists'] = lt.newList('ARRAY_LIST', filename=filename)
+    return catalog
+
+def loadArtworks(catalog, filename):
+    catalog['artworks'] = lt.newList('ARRAY_LIST', filename=filename)
+    return catalog
+
+def addArtist(catalog, artist):
+    lt.addLast(catalog["artists"], artist)
+
+def addArtwork(catalog, artwork):
     lt.addLast(catalog["artworks"], artwork)
     
 # Funciones para creacion de datos

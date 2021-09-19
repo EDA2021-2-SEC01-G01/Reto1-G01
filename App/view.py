@@ -35,9 +35,9 @@ operación solicitada
 """
 def initCatalog():
     return controller.initCatalog()
-
+    
 def loadData(catalog):
-    controller.loadData(catalog)
+    return controller.loadData(catalog, 'Artists-utf8-small', 'Artworks-utf8-small') 
 
 def printMenu():
     print("Bienvenido")
@@ -51,10 +51,11 @@ Menu principal
 """
 while True:
     printMenu()
+    catalog = initCatalog()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-
+        catalog = loadData(catalog)
     elif int(inputs[0]) == 2:
         pass
 
