@@ -48,4 +48,8 @@ def loadData(catalog, artistFilename, artworksFilename):
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+
+def listArtist(catalog,ainicio,afinal):
+  return model.listArtist(catalog,ainicio,afinal)
+  
 #loadAuthors(initCatalog)

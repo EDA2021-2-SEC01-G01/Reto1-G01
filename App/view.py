@@ -37,12 +37,25 @@ def initCatalog():
     return controller.initCatalog()
     
 def loadData(catalog):
-    return controller.loadData(catalog, 'Artists-utf8-small', 'Artworks-utf8-small') 
+    return controller.loadData(catalog, 'Artists-utf8-small.csv', 'Artworks-utf8-small.csv') 
+
+def listArtist(catalog):
+    ainicio = int(input("Ingrese el año inicial: "))
+    afinal = int(input("Ingrese el año final: "))
+
+    rank_artist = (controller.listArtist(catalog,ainicio,afinal))
+    print("Hay "+str(len(rank_artist))+" artistas nacidos entre "+ str(ainicio)+" y "+str(afinal)+".")
+
 
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Listar cronológicamente los artistas")
+    print("3- Listar cronologicamente las adquisiciones")
+    print("4- Clasificar las obras de un artista por tecnica")
+    print("5- Clasificar las obras por la nacionalidad de sus creadores")
+    print("6- ")
+    print("7- ")
 
 catalog = None
 
@@ -51,13 +64,14 @@ Menu principal
 """
 while True:
     printMenu()
-    catalog = initCatalog()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        catalog = initCatalog()
         print("Cargando información de los archivos ....")
         catalog = loadData(catalog)
+
     elif int(inputs[0]) == 2:
-        pass
+        print(listArtist(catalog))
 
     else:
         sys.exit(0)

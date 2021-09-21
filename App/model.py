@@ -58,17 +58,22 @@ def loadArtists(catalog, filename):
 def loadArtworks(catalog, filename):
     catalog['artworks'] = lt.newList('ARRAY_LIST', filename=filename)
     return catalog
-
+    
+# Funciones para creacion de datos
 def addArtist(catalog, artist):
     lt.addLast(catalog["artists"], artist)
 
 def addArtwork(catalog, artwork):
     lt.addLast(catalog["artworks"], artwork)
-    
-# Funciones para creacion de datos
-
 
 # Funciones de consulta
+def listArtist(catalog,ainicio,afinal):
+    rank_artist = []
+    for artist in catalog["artists"]["elements"]:
+      if int(artist["BeginDate"]) >= ainicio and int(artist["EndDate"]) < afinal:
+        rank_artist += artist
+
+    return rank_artist
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
