@@ -68,13 +68,17 @@ def addArtwork(catalog, artwork):
 
 # Funciones de consulta
 def listArtist(catalog,ainicio,afinal):
-    rank_artist = []
-    for artist in catalog["artists"]["elements"]:
-      if int(artist["BeginDate"]) >= ainicio and int(artist["EndDate"]) < afinal:
-        rank_artist += artist
+    rank_artist = lt.newList(datastructure="ARRAY_LIST")
 
+    for artist in lt.iterator(catalog["artists"]):
+      if int(artist["BeginDate"]) >= ainicio and int(artist["BeginDate"]) <= afinal:
+        lt.addLast(rank_artist, artist)
+      
+    sa.sort(rank_artist,compare_dates)
     return rank_artist
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
+def compare_dates(date1, date2):
+  return (int(date1["BeginDate"]) < int(date2["BeginDate"]))

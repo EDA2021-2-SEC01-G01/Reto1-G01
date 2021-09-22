@@ -44,8 +44,14 @@ def listArtist(catalog):
     afinal = int(input("Ingrese el año final: "))
 
     rank_artist = (controller.listArtist(catalog,ainicio,afinal))
-    print("Hay "+str(len(rank_artist))+" artistas nacidos entre "+ str(ainicio)+" y "+str(afinal)+".")
-
+    print("Hay "+ str(lt.size(rank_artist))+" artistas nacidos entre "+ str(ainicio)+" y "+str(afinal)+".")
+    print("Los primeros 3 y los ultimos 3 son: ")
+    for artist in rank_artist["elements"][:3]:
+        print("Nombre: "+ artist["DisplayName"] +"\t"+ "Fecha de nacimiento: " +str(artist["BeginDate"])+"\t"+ "Fecha de fallecimiento: "
+        + str(artist["EndDate"]) +"\t"+ "Nacionalidad: " +artist["Nationality"] +"\t"+ "Genero: " + artist["Gender"])
+    for artist in rank_artist["elements"][-3:]:
+        print("Nombre: "+ artist["DisplayName"] +"\t"+ "Fecha de nacimiento: " +str(artist["BeginDate"])+"\t"+ "Fecha de fallecimiento: "
+        + str(artist["EndDate"]) +"\t"+ "Nacionalidad: " +artist["Nationality"] +"\t"+ "Genero: " + artist["Gender"])
 
 def printMenu():
     print("Bienvenido")
@@ -71,8 +77,8 @@ while True:
         catalog = loadData(catalog)
 
     elif int(inputs[0]) == 2:
-        print(listArtist(catalog))
-
+        listArtist(catalog)
+    
     else:
         sys.exit(0)
 sys.exit(0)
