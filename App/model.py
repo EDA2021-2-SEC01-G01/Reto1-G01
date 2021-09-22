@@ -25,6 +25,7 @@
  """
 
 
+from DISClib.DataStructures.arraylist import iterator
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -76,6 +77,20 @@ def listArtist(catalog,ainicio,afinal):
       
     sa.sort(rank_artist,compare_dates)
     return rank_artist
+
+def listArtworks(catalog,finicial,ffinal):
+    finicial_new = finicial.split("-")
+    ffinal_new = ffinal.split("-")
+
+    rank_artworks = lt.newList(datastructure="ARRAY_LIST")
+    for artwork in lt.iterator(catalog["artworks"]):
+      year = (artwork["DateAcquired"].split("/"))[3]
+      month = (artwork["DateAcquired"].split("/"))[1]
+      day = (artwork["DateAcquired"].split("/"))[2]
+      if year >= finicial_new[1] and year <= ffinal_new[1]:
+        if month >=finicial_new[2] and month <= ffinal_new[2]:
+          if day >= finicial_new[3] and day <= ffinal_new[3]:
+            lt.addLast(rank_artworks,artwork)
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 

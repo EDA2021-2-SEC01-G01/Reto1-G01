@@ -60,8 +60,7 @@ def printMenu():
     print("3- Listar cronologicamente las adquisiciones")
     print("4- Clasificar las obras de un artista por tecnica")
     print("5- Clasificar las obras por la nacionalidad de sus creadores")
-    print("6- ")
-    print("7- ")
+    print("6- Transportar obras de un departamento")
 
 catalog = None
 
@@ -77,7 +76,12 @@ while True:
         catalog = loadData(catalog)
 
     elif int(inputs[0]) == 2:
-        listArtist(catalog)
+        if catalog == None:
+            print("Debe cargar los datos primero")
+            input("Presione enter para continuar...")
+        else:
+            listArtist(catalog)
+            input("Presione enter para continuar...")
     
     else:
         sys.exit(0)
