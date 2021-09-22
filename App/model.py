@@ -103,11 +103,18 @@ def listarNacionalidadObras(catalog):
     creators = nacionalidadListaArtistas(catalog, artwork['ConstituentID'])
 
     for info in lt.iterator(creators):
-      if naciones_dict.get(info['nacionalidad'], None) == None:
-        naciones_dict[info['nacionalidad']] = lt.newList(datastructure='SINGLE_LINKED')
-        lt.addLast(naciones_dict[info['nacionalidad']], info['infoArtista'])
+      nacionalidad_dict = info['nacionalidad']
+
+      if nacionalidad_dict == '' or nacionalidad_dict == 'Nationality unknown':
+        nacionalidad_obtener = 'Unknown'
       else:
-        lt.addLast(naciones_dict[info['nacionalidad']], info['infoArtista'])
+        nacionalidad_obtener = nacionalidad_dict
+
+      if naciones_dict.get(nacionalidad_obtener, None) == None:
+        naciones_dict[nacionalidad_obtener] = lt.newList(datastructure='SINGLE_LINKED')
+        lt.addLast(naciones_dict[nacionalidad_obtener], info['infoArtista'])
+      else:
+        lt.addLast(naciones_dict[nacionalidad_obtener], info['infoArtista'])
 
   for nacionalidad in naciones_dict:
     lt.addLast(naciones_list, {'nacionalidad': nacionalidad, 'tamano': lt.size(naciones_dict[nacionalidad])})
@@ -116,7 +123,7 @@ def listarNacionalidadObras(catalog):
   primer_elemento = lt.removeFirst(sorted_list)
   primer_elemento = {'nacionalidad': primer_elemento['nacionalidad'], 'obras': naciones_dict[primer_elemento['nacionalidad']], 'tamano': primer_elemento['tamano']}
   lt.addFirst(sorted_list, primer_elemento)
-  return sorted_list
+  return sorted_list['elements'][:10]
 
 
 def nacionalidadListaArtistas(catalog, idArtistas):
@@ -132,7 +139,8 @@ def nacionalidadListaArtistas(catalog, idArtistas):
 
 def crearListaDesdeStr(cadena: str):
   sin_corchete = cadena[1:-1]
-  return sin_corchete.split(',')
+  sin_espacio = sin_corchete.replace(' ', '')
+  return sin_espacio.split(',')
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento

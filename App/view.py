@@ -37,7 +37,16 @@ def initCatalog():
     return controller.initCatalog()
     
 def loadData(catalog):
-    return controller.loadData(catalog, 'Artists-utf8-small.csv', 'Artworks-utf8-small.csv') 
+    artistas = input('Ingresa el nombre del archivo de artistas: (Por defecto es el archivo de artistas pequeño)')
+    obras = input('Ingresa el nombre del archivo de obras: (Por defecto es el archivo de obras pequeño)')
+
+    if artistas == '':
+        artistas = 'Artists-utf8-small.csv'
+
+    if obras == '':
+        obras = 'Artworks-utf8-small.csv'
+
+    return controller.loadData(catalog, artistas, obras) 
 
 def listArtist(catalog):
     ainicio = int(input("Ingrese el año inicial: "))
@@ -58,7 +67,13 @@ def listArtist(catalog):
 #Requerimiento 3
 
 def clasificarPorNacionalidad(catalog):
-    print(controller.nacionalidadObras(catalog))
+    naciones = controller.nacionalidadObras(catalog)
+    print('El top 10 naciones en el MoMA es:\n')
+    print('Nacionalidad\t|\tObras')
+    print('-----------------------------------\n')
+    for nacion in naciones:
+        print(nacion['nacionalidad'], '\t', '|', '\t', nacion['tamano'], '\n')
+        print('-----------------------------------\n')
 
 def printMenu():
     print("Bienvenido")
@@ -89,7 +104,7 @@ while True:
         else:
             listArtist(catalog)
             input("Presione enter para continuar...")
-    elif int(inputs[0]) == 4:
+    elif int(inputs[0]) == 5:
         if catalog == None:
             print("Debe cargar los datos primero")
             input("Presione enter para continuar...")
