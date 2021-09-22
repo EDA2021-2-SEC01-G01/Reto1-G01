@@ -67,6 +67,9 @@ def addArtist(catalog, artist):
 def addArtwork(catalog, artwork):
     lt.addLast(catalog["artworks"], artwork)
 
+def addArtworkToNatio(nacion, artwork):
+  lt.addLast(nacion, artwork)
+
 # Funciones de consulta
 def listArtist(catalog,ainicio,afinal):
     rank_artist = lt.newList(datastructure="ARRAY_LIST")
@@ -92,8 +95,49 @@ def listArtworks(catalog,finicial,ffinal):
           if day >= finicial_new[3] and day <= ffinal_new[3]:
             lt.addLast(rank_artworks,artwork)
 
+def listarNacionalidadObras(catalog):
+  naciones_dict = {}
+  naciones_list = lt.newList(datastructure='ARRAY_LIST')
+
+  for artwork in lt.iterator(catalog['artworks']):
+    creators = nacionalidadListaArtistas(catalog, artwork['ConstituentID'])
+
+    for info in lt.iterator(creators):
+      if naciones_dict.get(info['nacionalidad'], None) == None:
+        naciones_dict[info['nacionalidad']] = lt.newList(datastructure='SINGLE_LINKED')
+        lt.addLast(naciones_dict[info['nacionalidad']], info['infoArtista'])
+      else:
+        lt.addLast(naciones_dict[info['nacionalidad']], info['infoArtista'])
+
+  for nacionalidad in naciones_dict:
+    lt.addLast(naciones_list, {'nacionalidad': nacionalidad, 'tamano': lt.size(naciones_dict[nacionalidad])})
+
+  sorted_list = sa.sort(naciones_list, ordernar_naciones_cantidad)
+  primer_elemento = lt.removeFirst(sorted_list)
+  primer_elemento = {'nacionalidad': primer_elemento['nacionalidad'], 'obras': naciones_dict[primer_elemento['nacionalidad']], 'tamano': primer_elemento['tamano']}
+  lt.addFirst(sorted_list, primer_elemento)
+  return sorted_list
+
+
+def nacionalidadListaArtistas(catalog, idArtistas):
+  naciones = lt.newList(datastructure='ARRAY_LIST')
+
+  for artista in lt.iterator(catalog['artists']):
+    for creador in crearListaDesdeStr(idArtistas):
+      if artista['ConstituentID'] == creador:
+        lt.addLast(naciones, {'infoArtista': artista, 'nacionalidad': artista['Nationality']})
+
+  return naciones
+
+
+def crearListaDesdeStr(cadena: str):
+  sin_corchete = cadena[1:-1]
+  return sin_corchete.split(',')
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
 def compare_dates(date1, date2):
   return (int(date1["BeginDate"]) < int(date2["BeginDate"]))
+
+def ordernar_naciones_cantidad(nacion1, nacion2):
+  return nacion1['tamano'] >= nacion2['tamano']

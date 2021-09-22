@@ -45,6 +45,9 @@ def loadData(catalog, artistFilename, artworksFilename):
   
   return catalog
 
+def nacionalidadObras(catalog):
+  return model.listarNacionalidadObras(catalog) 
+
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo

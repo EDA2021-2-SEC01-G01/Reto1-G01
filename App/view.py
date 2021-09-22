@@ -53,6 +53,13 @@ def listArtist(catalog):
         print("Nombre: "+ artist["DisplayName"] +"\t"+ "Fecha de nacimiento: " +str(artist["BeginDate"])+"\t"+ "Fecha de fallecimiento: "
         + str(artist["EndDate"]) +"\t"+ "Nacionalidad: " +artist["Nationality"] +"\t"+ "Genero: " + artist["Gender"])
 
+# Requerimiento 2
+
+#Requerimiento 3
+
+def clasificarPorNacionalidad(catalog):
+    print(controller.nacionalidadObras(catalog))
+
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
@@ -82,7 +89,13 @@ while True:
         else:
             listArtist(catalog)
             input("Presione enter para continuar...")
-    
+    elif int(inputs[0]) == 4:
+        if catalog == None:
+            print("Debe cargar los datos primero")
+            input("Presione enter para continuar...")
+        else:
+            clasificarPorNacionalidad(catalog)
+            input("Presione enter para continuar...")
     else:
         sys.exit(0)
 sys.exit(0)
