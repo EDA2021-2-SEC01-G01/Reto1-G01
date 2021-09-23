@@ -217,6 +217,11 @@ def calcularCostosObra(obra):
 
   return valorKgM2M3
 
+
+def proponerObras(catalog, dateInicial, dateFinal, areaDisponible):
+  disponible = areaDisponible
+
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
