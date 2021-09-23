@@ -43,10 +43,7 @@ def loadData(catalog, artistFilename, artworksFilename):
   catalog = model.loadArtists(catalog, artistFile)
   catalog = model.loadArtworks(catalog, artworksFile)
   
-  return catalog
-
-def nacionalidadObras(catalog):
-  return model.listarNacionalidadObras(catalog) 
+  return catalog 
 
 # Funciones de ordenamiento
 
@@ -54,5 +51,14 @@ def nacionalidadObras(catalog):
 
 def listArtist(catalog,ainicio,afinal):
   return model.listArtist(catalog,ainicio,afinal)
+
+def nacionalidadObras(catalog):
+  return model.listarNacionalidadObras(catalog)
+
+def transportarObras(catalogo, departamento):
+  obras_depto = model.obtenerObrasDepartamento(catalogo, departamento)
+  return model.transportarObras(obras_depto)
   
+
+
 #loadAuthors(initCatalog)

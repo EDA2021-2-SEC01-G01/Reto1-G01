@@ -66,6 +66,8 @@ def listArtist(catalog):
 
 #Requerimiento 3
 
+#Requerimiento 4
+
 def clasificarPorNacionalidad(catalog):
     naciones = controller.nacionalidadObras(catalog)
     print('El top 10 naciones en el MoMA es:\n')
@@ -74,6 +76,32 @@ def clasificarPorNacionalidad(catalog):
     for nacion in naciones:
         print(nacion['nacionalidad'], '\t', '|', '\t', nacion['tamano'], '\n')
         print('-----------------------------------\n')
+
+#Requerimiento 5
+
+def transportarObras(catalog):
+    departamento = input('Ingrese el departamento a transportar: ')
+    info = controller.transportarObras(catalog, departamento)
+    print('La cantidad de obras transportadas fue:', info['cantidad'])
+    print('El peso aproximado que fue transportado es:', info['pesoObras'], '(Kg)')
+    print('El costo aproimado del servicio fue:', info['costoServicio'])
+    print('Las 5 obras más costosas de transportar son: \n')
+
+    print('ObjectID','\t|\t', 'Title','\t|\t', 'ConstituentID','\t|\t', 'Medium','\t|\t', 'Date','\t|\t', 'Dimensions','\t|\t', 'Classification','\t|\t', 'TransCost (USD)\n')
+    print('---------------------------------------\n')
+    for obra in info['masCostosas']:
+        print(obra['ObjectID'],'\t|\t', obra['Title'],'\t|\t', obra['ConstituentID'],'\t|\t', obra['Medium'],'\t|\t', obra['Date'],'\t|\t', obra['Dimensions'],'\t|\t', obra['Classification'],'\t|\t', obra['costoTransporte'], '\n')
+        print('---------------------------------------\n')
+    print('Las 5 obras más antiguas que se transportaron son: \n')
+
+    print('ObjectID','\t|\t', 'Title','\t|\t', 'ConstituentID','\t|\t', 'Medium','\t|\t', 'Date','\t|\t', 'Dimensions','\t|\t', 'Classification','\t|\t', 'TransCost (USD)\n')
+    print('---------------------------------------\n')
+    for obra in info['masAntiguas']:
+        print(obra['ObjectID'],'\t|\t', obra['Title'],'\t|\t', obra['ConstituentID'],'\t|\t', obra['Medium'],'\t|\t', obra['Date'],'\t|\t', obra['Dimensions'],'\t|\t', obra['Classification'],'\t|\t', obra['costoTransporte'], '\n')
+        print('---------------------------------------\n')
+
+
+#Requerimiento 6
 
 def printMenu():
     print("Bienvenido")
@@ -110,6 +138,13 @@ while True:
             input("Presione enter para continuar...")
         else:
             clasificarPorNacionalidad(catalog)
+            input("Presione enter para continuar...")
+    elif int(inputs[0]) == 6:
+        if catalog == None:
+            print("Debe cargar los datos primero")
+            input("Presione enter para continuar...")
+        else:
+            transportarObras(catalog)
             input("Presione enter para continuar...")
     else:
         sys.exit(0)

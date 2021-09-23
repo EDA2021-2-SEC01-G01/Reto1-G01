@@ -25,6 +25,7 @@
  """
 
 
+from os import replace
 from DISClib.DataStructures.arraylist import iterator
 import config as cf
 from DISClib.ADT import list as lt
@@ -95,6 +96,8 @@ def listArtworks(catalog,finicial,ffinal):
           if day >= finicial_new[3] and day <= ffinal_new[3]:
             lt.addLast(rank_artworks,artwork)
 
+#Requerimiento 4
+
 def listarNacionalidadObras(catalog):
   naciones_dict = {}
   naciones_list = lt.newList(datastructure='ARRAY_LIST')
@@ -141,6 +144,79 @@ def crearListaDesdeStr(cadena: str):
   sin_corchete = cadena[1:-1]
   sin_espacio = sin_corchete.replace(' ', '')
   return sin_espacio.split(',')
+
+#Requerimiento 5
+
+def transportarObras(obras):
+  info = {}
+  info['cantidad'] = lt.size(obras)
+
+  valorTotal = 0
+  pesoTotal = 0
+
+  for obra in lt.iterator(obras):
+    valorTotal += obra['costoTransporte']
+    if obra['Weight (kg)'].replace(' ', '') != '':
+      pesoTotal += float(obra['Weight (kg)'].replace(' ', ''))
+
+  info['costoServicio'] = valorTotal
+  info['pesoObras'] = pesoTotal
+  info['masAntiguas'] = sa.sort(obras, mas_antigua)['elements'][:5]
+  info['masCostosas'] = sa.sort(obras, ordenar_costo)['elements'][:5]
+
+  return info
+
+
+def obtenerObrasDepartamento(catalog, departamento):
+  obras_depto = lt.newList(datastructure='ARRAY_LIST')
+
+  for obra in lt.iterator(catalog['artworks']):
+    if obra['Department'] == departamento:
+      obraNueva = obra.copy()
+      obraNueva['costoTransporte'] = calcularCostosObra(obra)
+      lt.addLast(obras_depto, obraNueva)
+
+  return obras_depto
+
+
+def calcularCostosObra(obra):  
+  peso = obra['Weight (kg)'].replace(' ', '')
+  alto = obra['Height (cm)'].replace(' ', '')
+  ancho = obra['Width (cm)'].replace(' ', '')
+  fondo = obra['Length (cm)'].replace(' ', '')
+
+  valorKgM2M3 = 0
+
+  if (peso != ''):
+    peso = float(peso)
+    if peso * 72 > valorKgM2M3:
+      valorKgM2M3 = peso * 72
+
+  if alto != '' and ancho != '' and fondo != '':
+    m3 = (float(alto) * float(ancho) * float(fondo))/10000
+    if m3 * 72 > valorKgM2M3:
+      valorKgM2M3 = m3 * 72
+  
+  elif alto != '' and ancho != '':
+    m2 = (float(alto) * float(ancho)) / 10000
+    if m2 * 72 > valorKgM2M3:
+      valorKgM2M3 = m2 * 72
+  
+  elif alto != '' and fondo != '':
+    m2 = (float(alto) * float(fondo)) / 10000
+    if m2 * 72 > valorKgM2M3:
+      valorKgM2M3 = m2 * 72
+  
+  elif ancho != '' and fondo != '':
+    m2 = (float(ancho) * float(fondo)) / 10000
+    if m2 * 72 > valorKgM2M3:
+      valorKgM2M3 = m2 * 72
+  
+  if valorKgM2M3 == 0:
+    valorKgM2M3 = 48
+
+  return valorKgM2M3
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
@@ -149,3 +225,13 @@ def compare_dates(date1, date2):
 
 def ordernar_naciones_cantidad(nacion1, nacion2):
   return nacion1['tamano'] >= nacion2['tamano']
+
+def ordenar_costo(obra1, obra2):
+  return obra1['costoTransporte'] >= obra2['costoTransporte']
+
+def mas_antigua(date1, date2):
+  if date1['Date'] == '':
+    return False
+  if date2['Date'] == '':
+    return False
+  return int(date1['Date']) < int(date2['Date'])
