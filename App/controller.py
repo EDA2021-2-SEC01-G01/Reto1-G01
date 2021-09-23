@@ -59,6 +59,7 @@ def transportarObras(catalogo, departamento):
   obras_depto = model.obtenerObrasDepartamento(catalogo, departamento)
   return model.transportarObras(obras_depto)
   
-
+def proponerObras(catalogo, dateInicial, dateFinal, areaDisponible):
+  return model.proponerObras(catalogo, dateInicial, dateFinal, areaDisponible)
 
 #loadAuthors(initCatalog)

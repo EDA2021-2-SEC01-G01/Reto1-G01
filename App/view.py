@@ -103,6 +103,25 @@ def transportarObras(catalog):
 
 #Requerimiento 6
 
+def proponerObras(catalogo):
+    inicial = int(input('Ingresa el año inicial: '))
+    final = int(input('Ingresa el año final: '))
+    areaDisponible = float(input('Ingresa el area disponible (m^2): '))
+    obras = controller.proponerObras(catalogo, inicial, final, areaDisponible)
+    
+    print('La cantidad de obras a exponer es:', obras['cantidad'])
+    print('El area cubierta es:', obras['atotal'], 'm^2', 'de', areaDisponible, 'm^2')
+    print('Primeras 5 obras:')
+    print('ObjectID','\t|\t', 'Title','\t|\t', 'ConstituentID','\t|\t', 'Medium','\t|\t', 'Date','\t|\t', 'Dimensions','\t|\t', 'Classification','\t|\t', 'TransCost (USD)\n')
+    print('---------------------------------------\n')
+    for obra in obras['obras']['elements'][:5]:
+        print(obra['ObjectID'],'\t|\t', obra['Title'],'\t|\t', obra['ConstituentID'],'\t|\t', obra['Medium'],'\t|\t', obra['Date'],'\t|\t', obra['Dimensions'],'\t|\t', obra['Classification'])
+        print('---------------------------------------\n')
+    print('Ultimas 5 obras:')
+    for obra in obras['obras']['elements'][:-5]:
+        print(obra['ObjectID'],'\t|\t', obra['Title'],'\t|\t', obra['ConstituentID'],'\t|\t', obra['Medium'],'\t|\t', obra['Date'],'\t|\t', obra['Dimensions'],'\t|\t', obra['Classification'])
+        print('---------------------------------------\n')
+
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
@@ -111,6 +130,7 @@ def printMenu():
     print("4- Clasificar las obras de un artista por tecnica")
     print("5- Clasificar las obras por la nacionalidad de sus creadores")
     print("6- Transportar obras de un departamento")
+    print("7- Proponer obras por area")
 
 catalog = None
 
@@ -145,6 +165,13 @@ while True:
             input("Presione enter para continuar...")
         else:
             transportarObras(catalog)
+            input("Presione enter para continuar...")
+    elif int(inputs[0]) == 7:
+        if catalog == None:
+            print("Debe cargar los datos primero")
+            input("Presione enter para continuar...")
+        else:
+            proponerObras(catalog)
             input("Presione enter para continuar...")
     else:
         sys.exit(0)

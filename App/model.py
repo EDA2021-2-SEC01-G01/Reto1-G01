@@ -88,13 +88,22 @@ def listArtworks(catalog,finicial,ffinal):
 
     rank_artworks = lt.newList(datastructure="ARRAY_LIST")
     for artwork in lt.iterator(catalog["artworks"]):
-      year = (artwork["DateAcquired"].split("/"))[3]
-      month = (artwork["DateAcquired"].split("/"))[1]
-      day = (artwork["DateAcquired"].split("/"))[2]
-      if year >= finicial_new[1] and year <= ffinal_new[1]:
-        if month >=finicial_new[2] and month <= ffinal_new[2]:
-          if day >= finicial_new[3] and day <= ffinal_new[3]:
-            lt.addLast(rank_artworks,artwork)
+      if len(artwork["DateAcquired"]) != 0:
+         year = int(artwork["DateAcquired"].split("-")[0])
+         month = int(artwork["DateAcquired"].split("-")[1])
+         day = int(artwork["DateAcquired"].split("-")[2])
+         if year > int(finicial_new[0]) and year < int(ffinal_new[0]):
+           lt.addLast(rank_artworks,artwork)
+         elif year == int(finicial_new[0]) or year == int(ffinal_new[0]):
+           if month > int(finicial_new[1]) and month < int(ffinal_new[1]):
+               lt.addLast(rank_artworks,artwork)
+           elif month == int(finicial_new[1]) or month == int(ffinal_new[1]):
+             if day >= int(finicial_new[2]) and day <= int(ffinal_new[2]):
+               lt.addLast(rank_artworks,artwork)
+
+
+    sa.sort(rank_artworks, compare_dates)
+    return rank_artworks
 
 #Requerimiento 4
 
@@ -219,8 +228,38 @@ def calcularCostosObra(obra):
 
 
 def proponerObras(catalog, dateInicial, dateFinal, areaDisponible):
-  disponible = areaDisponible
+  disponible = float(areaDisponible)
+  obras_en_fecha = lt.newList(datastructure='LINKED_LIST')
+  for obra in lt.iterator(catalog['artworks']):
+    if obra['Date'] != '':
+      if int(obra['Date']) <= dateFinal and int(obra['Date']) >= dateInicial:
+        lt.addLast(obras_en_fecha, obra)
 
+  seleccionadas = lt.newList(datastructure='ARRAY_LIST')
+  atotal = 0
+
+  for obra in lt.iterator(obras_en_fecha):
+    alto = obra['Height (cm)'].replace(' ', '')
+    ancho = obra['Width (cm)'].replace(' ', '')
+    fondo = obra['Length (cm)'].replace(' ', '')
+
+    m2 = 0
+
+    if alto != '' and ancho != '':
+      m2 = (float(alto) * float(ancho)) / 10000
+  
+    elif alto != '' and fondo != '':
+      m2 = (float(alto) * float(fondo)) / 10000
+    
+    elif ancho != '' and fondo != '':
+      m2 = (float(ancho) * float(fondo)) / 10000
+
+    if m2 != 0 and m2 <= disponible:
+      lt.addLast(seleccionadas, obra)
+      atotal += m2
+      disponible -= m2
+
+  return {'obras': seleccionadas, 'atotal': atotal, 'cantidad': lt.size(seleccionadas)}
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
